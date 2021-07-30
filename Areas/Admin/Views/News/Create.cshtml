@@ -1,0 +1,195 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@section StyleSheets{
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/monokai-sublime.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/quill.snow.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/plugins/forms/form-quill-editor.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/pages/page-blog.css">
+    <!-- END: Page CSS-->
+
+}
+<!-- Blog Edit -->
+<div class="blog-edit-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="avatar mr-75">
+                            <img src="/admin/app-assets/images/portrait/small/avatar-s-9.jpg" width="38" height="38" alt="Avatar" />
+                        </div>
+                        <div class="media-body">
+                            <h6 class="mb-25">Chad Alexander</h6>
+                            <p class="card-text">May 24, 2020</p>
+                        </div>
+                    </div>
+                    <!-- Form -->
+                    <form action="" class="mt-2">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group mb-2">
+                                    <label for="blog-edit-title">Title</label>
+                                    <input type="text" name="title" id="blog-edit-title" class="form-control" value="The Best Features Coming to iOS and Web design" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group mb-2">
+                                    <label for="blog-edit-category">Category</label>
+                                    <select id="blog-edit-category" name="category" class="select2 form-control" multiple>
+                                        <option value="1" selected>Fashion</option>
+                                        <option value="2">Food</option>
+                                        <option value="3" selected>Gaming</option>
+                                        <option value="4">Quote</option>
+                                        <option value="5">Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group mb-2">
+                                    <label for="blog-edit-slug">Slug</label>
+                                    <input type="text" name="slug" id="blog-edit-slug" class="form-control" value="the-best-features-coming-to-ios-and-web-design" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group mb-2">
+                                    <label for="blog-edit-status">Status</label>
+                                    <select class="form-control" id="blog-edit-status">
+                                        <option value="Published">Published</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Draft">Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-2">
+                                    <label>Content</label>
+                                    <div id="blog-editor-wrapper">
+                                        <div id="blog-editor-container">
+                                            <div class="editor">
+                                                <p>
+                                                    Cupcake ipsum dolor sit. Amet dessert donut candy chocolate bar cotton dessert candy
+                                                    chocolate. Candy muffin danish. Macaroon brownie jelly beans marzipan cheesecake oat cake.
+                                                    Carrot cake macaroon chocolate cake. Jelly brownie jelly. Marzipan pie sweet roll.
+                                                </p>
+                                                <p><br /></p>
+                                                <p>
+                                                    Liquorice dragée cake chupa chups pie cotton candy jujubes bear claw sesame snaps. Fruitcake
+                                                    chupa chups chocolate bonbon lemon drops croissant caramels lemon drops. Candy jelly cake
+                                                    marshmallow jelly beans dragée macaroon. Gummies sugar plum fruitcake. Candy canes candy
+                                                    cupcake caramels cotton candy jujubes fruitcake.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="border rounded p-2">
+                                    <h4 class="mb-1">Hình ảnh đại diện</h4>
+                                    <div class="media flex-column flex-md-row">
+                                        <img src="/admin/app-assets/images/slider/03.jpg" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="170" height="110" alt="Blog Featured Image" />
+                                        <div class="media-body">
+                                            <small class="text-muted">Required image resolution 800x400, image size 10mb.</small>
+                                            <p class="my-50">
+                                                <a href="javascript:void(0);" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                            </p>
+                                            <div class="d-inline-block">
+                                                <div class="form-group mb-0">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="blogCustomFile" accept="image/*" />
+                                                        <label class="custom-file-label" for="blogCustomFile">Choose file</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-50">
+                                <button type="button" id="createNews" class="btn btn-primary mr-1">Save Changes</button>
+                                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--/ Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Blog Edit -->
+<!-- BEGIN: Page JS-->
+@section Scripts{
+    <!-- BEGIN: Vendor JS-->
+    <script src="/admin/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="/admin/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="/admin/app-assets/vendors/js/editors/quill/katex.min.js"></script>
+    <script src="/admin/app-assets/vendors/js/editors/quill/highlight.min.js"></script>
+    <script src="/admin/app-assets/vendors/js/editors/quill/quill.min.js"></script>
+    <script src="/admin/app-assets/vendors/js/editors/quill/quill.imageUploader.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="/admin/app-assets/js/core/app-menu.js"></script>
+    <script src="/admin/app-assets/js/core/app.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script>
+        var featherImage = "";
+        $('#createNews').click(function () {
+            var category = $("#blog-edit-category").val();
+            var title = $("#blog-edit-title").val();
+            var slug = $("#blog-edit-slug").val();
+            var content = $(".editor").html();
+            var file = $("#blogCustomFile")[0].files;
+            if (file.length == 0) {
+                return;
+            }
+            console.log(file[0]);
+            $.ajax({
+                url: "/Ajax/News/CreateNews",
+                type: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify(
+                    {
+                        category: category,
+                        title: title,
+                        slug: slug,
+                        content: content,
+                        featherImage: featherImage
+                    }
+                ),
+                success: function (result) {
+                    console.log("Thành công", result);
+                },
+                error: function (err) {
+                    console.log("Lỗi", err);
+                }
+            });
+        });
+    </script>
+    <script src="/admin/app-assets/js/scripts/pages/page-blog-edit.js"></script>
+    <!-- END: Page JS-->
+}
+<!-- END: Page JS-->

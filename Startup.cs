@@ -1,6 +1,10 @@
+﻿using LapTrinhEZ.Models.Entites;
+using LapTrinhEZ.Services;
+using LapTrinhEZ.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +17,7 @@ namespace LapTrinhEZ
 {
     public class Startup
     {
+        private readonly string Cors = "Cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +35,25 @@ namespace LapTrinhEZ
             .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+            #region Ngăn chặn các Website khác lấy dữ liệu từ trang web
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: Cors,
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:44331").AllowAnyHeader()
+                                .AllowAnyMethod();
+                });
+            });
+            #endregion
+            #region Inject Services
+            services.AddDbContext<LaptrinhezdbContext>(options =>
+                                                    options.UseSqlServer(
+                                                        Configuration.GetConnectionString("DefaultConnection")
+                                                    ));
+            services.AddScoped<INewsServices, NewsServices>();
+            services.AddScoped<IFileManager, FileManager>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,11 +76,17 @@ namespace LapTrinhEZ
             app.UseRouting();
 
             app.UseAuthorization();
-
+            //Cho phép sử dụng CORS
+            app.UseCors(Cors);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //Routing Controller
+                endpoints.MapControllerRoute
+                (
+                    name: "MyArea",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapControllerRoute
                 (
                     name: "default",
