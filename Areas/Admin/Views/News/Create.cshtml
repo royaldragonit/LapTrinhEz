@@ -188,6 +188,15 @@
                 }
             });
         });
+        $("#blog-edit-title").keyup(function () {
+            let str = nonAccentVietnamese($(this).val());
+            str = str.trim()
+                .replace(/^-+/g, "")         // remove one or more dash at the start of the string
+                .replace(/[^\w-]+/g, "-")    // convert any on-alphanumeric character to a dash
+                .replace(/-+/g, "-")         // convert consecutive dashes to singuar one
+                .replace(/-+$/g, "");
+            $("#blog-edit-slug").val(str);
+        });
     </script>
     <script src="/admin/app-assets/js/scripts/pages/page-blog-edit.js"></script>
     <!-- END: Page JS-->
