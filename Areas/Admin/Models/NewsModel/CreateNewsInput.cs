@@ -9,11 +9,11 @@ namespace LapTrinhEZ.Areas.Admin.Models.NewsModel
 {
     public class CreateNewsInput
     {
+        public int NewsId { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
-        [Required]
         public string FeatherImage { get; set; }
         public string Slug { get; set; }
         [Required]

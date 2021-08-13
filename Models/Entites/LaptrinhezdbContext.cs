@@ -18,19 +18,88 @@ namespace LapTrinhEZ.Models.Entites
         {
         }
 
+        public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<EmailPromotion> EmailPromotion { get; set; }
+        public virtual DbSet<LikeComent> LikeComent { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<NewsCategory> NewsCategory { get; set; }
         public virtual DbSet<NewsComment> NewsComment { get; set; }
         public virtual DbSet<NewsMenu> NewsMenu { get; set; }
+        public virtual DbSet<ReplyComment> ReplyComment { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<SubMenu> SubMenu { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<VNews> VNews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.Property(e => e.CreateOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Remark)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.News)
+                    .WithMany(p => p.Comment)
+                    .HasForeignKey(d => d.NewsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_News");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comment)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_User");
+            });
+
+            modelBuilder.Entity<EmailPromotion>(entity =>
+            {
+                entity.Property(e => e.CreateOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+            });
+
+            modelBuilder.Entity<LikeComent>(entity =>
+            {
+                entity.Property(e => e.CreateOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.LikeComent)
+                    .HasForeignKey(d => d.CommentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LikeComent_Comment");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.LikeComent)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LikeComent_User");
+            });
 
             modelBuilder.Entity<Menu>(entity =>
             {
@@ -59,6 +128,13 @@ namespace LapTrinhEZ.Models.Entites
                 entity.Property(e => e.CreateOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.FeatherImage)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.IsActive)
                     .IsRequired()
@@ -150,6 +226,33 @@ namespace LapTrinhEZ.Models.Entites
                     .HasForeignKey(d => d.NewsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NewsMenu_News");
+            });
+
+            modelBuilder.Entity<ReplyComment>(entity =>
+            {
+                entity.Property(e => e.CreateOn)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Remark)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.ReplyComment)
+                    .HasForeignKey(d => d.CommentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ReplyComment_Comment");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ReplyComment)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ReplyComment_User");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -254,6 +357,45 @@ namespace LapTrinhEZ.Models.Entites
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserRole_User");
+            });
+
+            modelBuilder.Entity<VNews>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vNews");
+
+                entity.Property(e => e.Author)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Body).IsRequired();
+
+                entity.Property(e => e.Category)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.CategorySlug)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreateOn).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.FeatherImage)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Slug)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(200);
             });
 
             OnModelCreatingPartial(modelBuilder);

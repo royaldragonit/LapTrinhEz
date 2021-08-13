@@ -59,6 +59,13 @@
             str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
             return str;
         }
+        function fGeneralSlug(str) {
+            return nonAccentVietnamese(str).trim()
+                .replace(/^-+/g, "")         // remove one or more dash at the start of the string
+                .replace(/[^\w-]+/g, "-")    // convert any on-alphanumeric character to a dash
+                .replace(/-+/g, "-")         // convert consecutive dashes to singuar one
+                .replace(/-+$/g, "");
+        }
     </script>
 </head>
 <!-- END: Head-->

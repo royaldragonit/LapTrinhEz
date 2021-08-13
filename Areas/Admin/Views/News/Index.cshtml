@@ -1,0 +1,90 @@
+﻿@model IEnumerable<LapTrinhEZ.Models.Entites.News>
+@section StyleSheets{
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/monokai-sublime.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/vendors/css/editors/quill/quill.snow.css">
+    <!-- END: Vendor CSS-->
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/plugins/forms/form-quill-editor.css">
+    <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/pages/page-blog.css">
+    <!-- END: Page CSS-->
+
+}
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeatherImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Views)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @item.Body.Substring(0, 50) ...
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeatherImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Views)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NewsId" class="btn btn-warning">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.NewsId" class="btn btn-info">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.NewsId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

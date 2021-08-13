@@ -1,4 +1,5 @@
-﻿using LapTrinhEZ.Models.Entites;
+﻿using AutoMapper;
+using LapTrinhEZ.Models.Entites;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -15,12 +16,14 @@ namespace LapTrinhEZ.Services
         public readonly IConfiguration _config;
         public readonly string _host;
         public readonly IWebHostEnvironment _environment;
-        public BaseServices(LaptrinhezdbContext db, IConfiguration config,IWebHostEnvironment environment)
+        public readonly IMapper _mapper;
+        public BaseServices(LaptrinhezdbContext db, IConfiguration config,IWebHostEnvironment environment, IMapper mapper)
         {
             _environment = environment;
             _db = db;
             _sp = new LaptrinhezdbContextProcedures(_db);
             _config = config;
+            _mapper = mapper;
             _host = _config["Host"];
         }
     }

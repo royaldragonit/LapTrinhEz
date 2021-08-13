@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using LapTrinhEZ.Models.AutoMapperModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,6 +68,21 @@ namespace LapTrinhEZ.Commons
         {
             byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return System.Text.Encoding.ASCII.GetString(bytes);
+        }
+
+        public static void AddAutoMapperComment(this IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+                mc.AllowNullCollections = true;
+
+                mc.AddProfile(typeof(CommentProfile));
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

@@ -14,6 +14,18 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[Comment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EmailPromotion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LikeComent]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Menu]",
          "ObjectType": 0
       },
@@ -34,6 +46,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ReplyComment]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Role]",
          "ObjectType": 0
       },
@@ -48,6 +64,26 @@
       {
          "Name": "[dbo].[UserRole]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vNews]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[LT_GetNewsFeather]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[LT_GetNewsMMO]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[LT_GetNewsRelate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[LT_GetNewsViews]",
+         "ObjectType": 1
       },
       {
          "Name": "[dbo].[LT_GetUser]",

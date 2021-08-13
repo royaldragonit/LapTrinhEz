@@ -1,4 +1,5 @@
-﻿using LapTrinhEZ.Commons;
+﻿using AutoMapper;
+using LapTrinhEZ.Commons;
 using LapTrinhEZ.Models.CustomModels;
 using LapTrinhEZ.Models.Entites;
 using LapTrinhEZ.Services.Interfaces;
@@ -15,9 +16,8 @@ namespace LapTrinhEZ.Services
 {
     public class FileManager :BaseServices, IFileManager
     {
-        public FileManager(LaptrinhezdbContext db, IConfiguration config, IWebHostEnvironment environment) : base(db, config, environment)
+        public FileManager(LaptrinhezdbContext db, IConfiguration config, IWebHostEnvironment environment, IMapper mapper) : base(db, config, environment, mapper)
         {
-
         }
 
         public async Task CreateFileWithName(IFormFile formData, string fileName)

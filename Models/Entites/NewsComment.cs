@@ -12,11 +12,11 @@ namespace LapTrinhEZ.Models.Entites
         public int NewsId { get; set; }
         public int UserId { get; set; }
         public int Star { get; set; }
-        public int CountLike { get; set; }
-        public int CountDisLike { get; set; }
         public string Content { get; set; }
         public DateTime CreateOn { get; set; }
         public bool? IsActive { get; set; }
+        public bool IsLike { get; set; }
+        public bool IsDisLike { get; set; }
 
         public virtual News User { get; set; }
         public virtual User UserNavigation { get; set; }

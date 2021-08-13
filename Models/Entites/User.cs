@@ -10,9 +10,12 @@ namespace LapTrinhEZ.Models.Entites
     {
         public User()
         {
+            Comment = new HashSet<Comment>();
+            LikeComent = new HashSet<LikeComent>();
             News = new HashSet<News>();
             NewsCategory = new HashSet<NewsCategory>();
             NewsComment = new HashSet<NewsComment>();
+            ReplyComment = new HashSet<ReplyComment>();
             UserRole = new HashSet<UserRole>();
         }
 
@@ -27,9 +30,12 @@ namespace LapTrinhEZ.Models.Entites
         public DateTime CreateOn { get; set; }
         public bool? IsActive { get; set; }
 
+        public virtual ICollection<Comment> Comment { get; set; }
+        public virtual ICollection<LikeComent> LikeComent { get; set; }
         public virtual ICollection<News> News { get; set; }
         public virtual ICollection<NewsCategory> NewsCategory { get; set; }
         public virtual ICollection<NewsComment> NewsComment { get; set; }
+        public virtual ICollection<ReplyComment> ReplyComment { get; set; }
         public virtual ICollection<UserRole> UserRole { get; set; }
     }
 }

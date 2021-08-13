@@ -16,7 +16,24 @@ namespace LapTrinhEZ.Ajax
         {
         }
         [HttpPost]
-        public ResultCustomModel<bool> CreateNews([FromBody]CreateNewsInput input)
+        public ResultCustomModel<bool> CreateNews([FromBody] CreateNewsInput input)
+        {
+            //Lúc tạo bắt buộc phải có FeatherImage
+            if (!ModelState.IsValid || string.IsNullOrEmpty(input.FeatherImage))
+            {
+                return new ResultCustomModel<bool>
+                {
+                    Code = 400,
+                    Data = false,
+                    Message = "Dữ liệu gửi lên bị thiếu hoặc không đúng định dạng, vui lòng thử lại",
+                    Success = false
+                };
+            }
+            var data = _newsServices.CreateNews(input).Result;
+            return data;
+        }
+        [HttpPost]
+        public ResultCustomModel<bool> EditNews([FromBody] CreateNewsInput input)
         {
             if (!ModelState.IsValid)
             {
@@ -28,7 +45,7 @@ namespace LapTrinhEZ.Ajax
                     Success = false
                 };
             }
-            var data = _newsServices.CreateNews(input).Result;
+            var data = _newsServices.EditNews(input).Result;
             return data;
         }
         [HttpPost]

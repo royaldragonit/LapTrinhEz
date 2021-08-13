@@ -1,6 +1,12 @@
 ﻿@using LapTrinhEZ.Models.Entites;
+@model VNews
 @{
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    //KhÔng tìm thấy
+    if (Model == null)
+    {
+
+    }
     List<Menu> lstMenu = ViewBag.ListCategory;
 }
 @section StyleSheets{
@@ -27,6 +33,7 @@
     <!-- END: Page CSS-->
 
 }
+<input type="hidden" id="newsId" value="@Model.NewsId" />
 <!-- Blog Edit -->
 <div class="blog-edit-wrapper">
     <div class="row">
@@ -38,8 +45,8 @@
                             <img src="/admin/app-assets/images/portrait/small/avatar-s-9.jpg" width="38" height="38" alt="Avatar" />
                         </div>
                         <div class="media-body">
-                            <h6 class="mb-25">Chad Alexander</h6>
-                            <p class="card-text">May 24, 2020</p>
+                            <h6 class="mb-25">@Model.Author</h6>
+                            <p class="card-text">@Model.CreateOn</p>
                         </div>
                     </div>
                     <!-- Form -->
@@ -48,7 +55,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group mb-2">
                                     <label for="blog-edit-title">Title</label>
-                                    <input type="text" name="title" id="blog-edit-title" class="form-control" value="The Best Features Coming to iOS and Web design" />
+                                    <input type="text" name="title" id="blog-edit-title" class="form-control" value="@Model.Title" />
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
@@ -69,10 +76,8 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group mb-2">
                                     <label for="blog-edit-slug">Slug</label>
-                                    <input type="text" name="slug" id="blog-edit-slug" class="form-control" value="the-best-features-coming-to-ios-and-web-design" />
+                                    <input type="text" name="slug" id="blog-edit-slug" class="form-control" value="@Model.Slug" />
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-12">
                             </div>
                             <div class="col-12">
                                 <div class="form-group mb-2">
@@ -80,18 +85,7 @@
                                     <div id="blog-editor-wrapper">
                                         <div id="blog-editor-container">
                                             <div class="editor">
-                                                <p>
-                                                    Cupcake ipsum dolor sit. Amet dessert donut candy chocolate bar cotton dessert candy
-                                                    chocolate. Candy muffin danish. Macaroon brownie jelly beans marzipan cheesecake oat cake.
-                                                    Carrot cake macaroon chocolate cake. Jelly brownie jelly. Marzipan pie sweet roll.
-                                                </p>
-                                                <p><br /></p>
-                                                <p>
-                                                    Liquorice dragée cake chupa chups pie cotton candy jujubes bear claw sesame snaps. Fruitcake
-                                                    chupa chups chocolate bonbon lemon drops croissant caramels lemon drops. Candy jelly cake
-                                                    marshmallow jelly beans dragée macaroon. Gummies sugar plum fruitcake. Candy canes candy
-                                                    cupcake caramels cotton candy jujubes fruitcake.
-                                                </p>
+                                                @Html.Raw(Model.Body)
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +95,7 @@
                                 <div class="border rounded p-2">
                                     <h4 class="mb-1">Hình ảnh đại diện</h4>
                                     <div class="media flex-column flex-md-row">
-                                        <img src="/admin/app-assets/images/slider/03.jpg" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="170" height="110" alt="Blog Featured Image" />
+                                        <img src="@Model.FeatherImage" id="blog-feature-image" class="rounded mr-2 mb-1 mb-md-0" width="170" height="110" alt="Blog Featured Image" />
                                         <div class="media-body">
                                             <small class="text-muted">Required image resolution 800x400, image size 10mb.</small>
                                             <p class="my-50">
@@ -155,12 +149,8 @@
             var category = $("#blog-edit-category").val();
             var title = $("#blog-edit-title").val();
             var slug = $("#blog-edit-slug").val();
+            var newsId = $("#newsId").val();
             var content = $(".editor").html();
-            var file = $("#blogCustomFile")[0].files;
-            if (file.length == 0) {
-                return;
-            }
-            console.log(file[0]);
             $.ajax({
                 url: "/Ajax/News/CreateNews",
                 type: "POST",
@@ -174,7 +164,8 @@
                         title: title,
                         slug: slug,
                         content: content,
-                        featherImage: featherImage
+                        featherImage: featherImage,
+                        newsId: newsId
                     }
                 ),
                 success: function (result) {

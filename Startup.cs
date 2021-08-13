@@ -1,4 +1,8 @@
-﻿using LapTrinhEZ.Models.Entites;
+﻿using AutoMapper;
+using LapTrinhEZ.Commons;
+using LapTrinhEZ.Middleware;
+using LapTrinhEZ.Models.CommentModels;
+using LapTrinhEZ.Models.Entites;
 using LapTrinhEZ.Services;
 using LapTrinhEZ.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +39,9 @@ namespace LapTrinhEZ
             .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddAutoMapperComment();
+
             #region Ngăn chặn các Website khác lấy dữ liệu từ trang web
             services.AddCors(options =>
             {
@@ -52,6 +59,7 @@ namespace LapTrinhEZ
                                                         Configuration.GetConnectionString("DefaultConnection")
                                                     ));
             services.AddScoped<INewsServices, NewsServices>();
+            services.AddScoped<ICommentServices, CommentServices>();
             services.AddScoped<IFileManager, FileManager>();
             #endregion
         }
@@ -74,7 +82,8 @@ namespace LapTrinhEZ
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //Đếm số lượng người xem
+            app.UseMiddleware(typeof(VisitorCounterMiddleware));
             app.UseAuthorization();
             //Cho phép sử dụng CORS
             app.UseCors(Cors);
@@ -84,13 +93,13 @@ namespace LapTrinhEZ
                 endpoints.MapControllerRoute
                 (
                     name: "MyArea",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}/{slug?}"
                 );
 
                 endpoints.MapControllerRoute
                 (
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{id?}/{slug?}"
                 );
             });
         }
