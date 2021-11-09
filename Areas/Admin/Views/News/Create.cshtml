@@ -57,10 +57,6 @@
                                     <select id="blog-edit-category" name="category" class="select2 form-control" multiple>
                                         @foreach (Menu menu in lstMenu)
                                         {
-                                            if (menu.MenuId == Model.MenuId)
-                                            {
-                                                <option value="@menu.MenuId" selected>@menu.Name</option>
-                                            }
                                             <option value="@menu.MenuId">@menu.Name</option>
                                         }
                                     </select>

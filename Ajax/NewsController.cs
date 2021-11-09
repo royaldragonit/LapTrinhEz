@@ -12,8 +12,10 @@ namespace LapTrinhEZ.Ajax
 {
     public class NewsController : BaseAjaxController
     {
-        public NewsController(INewsServices newsServices) : base(newsServices)
+        private readonly INewsServices _newsServices;
+        public NewsController(INewsServices newsServices) 
         {
+            _newsServices = newsServices;
         }
         [HttpPost]
         public ResultCustomModel<bool> CreateNews([FromBody] CreateNewsInput input)

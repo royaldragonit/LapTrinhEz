@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LapTrinhEZ.Models.CommentModels;
+using LapTrinhEZ.Models.CustomModels;
 using LapTrinhEZ.Models.Entites;
 using LapTrinhEZ.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,39 @@ namespace LapTrinhEZ.Services
     {
         public CommentServices(LaptrinhezdbContext db, IConfiguration config, IWebHostEnvironment environment, IMapper mapper) : base(db, config, environment, mapper)
         {
+        }
+
+        public async Task<ResultCustomModel<bool>> CreateComment(CreateCommentModels input, int _userId)
+        {
+            int save = 0;
+            if (input.IsReplyComment)
+            {
+                ReplyComment reply = new ReplyComment();
+                reply.CommentId = input.CommentId;
+                reply.CreateOn = DateTime.Now;
+                reply.IsActive = true;
+                reply.Remark = input.Remark;
+                reply.UserId = _userId;
+                _db.Entry(reply).State = EntityState.Added;
+            }
+            else
+            {
+                Comment comment = new Comment();
+                comment.CommentId = input.CommentId;
+                comment.CreateOn = DateTime.Now;
+                comment.IsActive = true;
+                comment.Remark = input.Remark;
+                comment.UserId = _userId;
+                _db.Entry(comment).State = EntityState.Added;
+            }
+            save += await _db.SaveChangesAsync();
+            return new ResultCustomModel<bool>
+            {
+                Code = 200,
+                Data = save > 0,
+                Message = save > 0?"Gửi bình luận thành công": "Gửi bình luận không thành công",
+                Success = save > 0
+            };
         }
 
         public async Task<List<ListCommentModel>> GetListComment(int pageIndex, int pageSize, int newsId)

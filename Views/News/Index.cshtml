@@ -11,6 +11,47 @@
         slug = ViewBag.HostName + "/News/" + Model.NewsId + "/" + Model.Slug;
     }
 }
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<style>
+    .post-comments {
+        padding-bottom: 9px;
+        margin: 5px 0 5px;
+    }
+    .img-comment{
+        width:40px;
+        border-radius:50%;
+    }
+    .comments-nav {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 5px;
+    }
+
+    .post-comments .comment-meta {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 5px;
+    }
+
+    .post-comments .media {
+        border-left: 1px dotted #000;
+        border-bottom: 1px dotted #000;
+        margin-bottom: 5px;
+        padding-left: 10px;
+    }
+
+    .post-comments .media-heading {
+        font-size: 12px;
+        color: grey;
+    }
+
+    .post-comments .comment-meta a {
+        font-size: 12px;
+        color: grey;
+        font-weight: bolder;
+        margin-right: 5px;
+    }
+</style>
 <input type="hidden" id="slug" value="@slug" />
 <!-- ##### Blog Area Start ##### -->
 <div class="blog-area section-padding-0-80">
@@ -119,60 +160,112 @@
 
                     <!-- Comment Area Start -->
                     <div class="comment_area clearfix">
-                        <h5 class="title">3 Comments</h5>
+                        @foreach (ListCommentModel comment in lstComment)
+                        {
+                            <div class="media">
+                                <!-- first comment -->
+                                <div class="media-heading">
+                                    <button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseExample">
+                                        <span class="glyphicon glyphicon-minus" aria-hidden="true">
+                                        </span>
+                                    </button>
+                                    <span class="author-thumbnail">
+                                        <img src="/img/bg-img/32.jpg" alt="" class="img-comment">
+                                    </span> @comment.UserFullName 12 hours ago
+                                </div>
 
-                        <ol>
-                            @foreach (ListCommentModel comment in lstComment)
-                            {
-                                <!-- Single Comment Area -->
-                                <li class="single_comment_area">
-                                    <!-- Comment Content -->
-                                    <div class="comment-content d-flex">
-                                        <!-- Comment Author -->
-                                        <div class="comment-author">
-                                            <img src="/img/bg-img/30.jpg" alt="author">
+                                <div class="panel-collapse collapse in" id="collapseOne">
+
+                                    <div class="media-left">
+                                        <div class="vote-wrap">
+                                            <div class="save-post">
+                                                <a href="#"><span class="glyphicon glyphicon-star" aria-label="Save"></span></a>
+                                            </div>
+                                            <div class="vote up">
+                                                <i class="glyphicon glyphicon-menu-up"></i>
+                                            </div>
+                                            <div class="vote inactive">
+                                                <i class="glyphicon glyphicon-menu-down"></i>
+                                            </div>
                                         </div>
-                                        <!-- Comment Meta -->
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-author">@comment.UserFullName</a>
-                                            <a href="#" class="post-date">@comment.CreateOn</a>
-                                            <p>@comment.Remark</p>
-                                        </div>
+                                        <!-- vote-wrap -->
                                     </div>
-                                    <ol class="children">
+                                    <!-- media-left -->
+
+
+                                    <div class="media-body">
+                                        <p>@comment.Remark.</p>
+                                        <div class="comment-meta">
+                                            <span><a href="#">delete</a></span>
+                                            <span><a href="#">report</a></span>
+                                            <span><a href="#">hide</a></span>
+                                            <span>
+                                                <a class="" role="button" data-toggle="collapse" href="#replyCommentT" aria-expanded="false" aria-controls="collapseExample">reply</a>
+                                            </span>
+                                            <div class="collapse" id="replyCommentT">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="comment">Your Comment</label>
+                                                        <textarea name="comment" class="form-control" rows="3"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-default">Send</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- comment-meta -->
                                         @foreach (ListReplyCommentModel item in comment.ListReplyComment)
                                         {
-                                            <li class="single_comment_area">
-                                                <!-- Comment Content -->
-                                                <div class="comment-content d-flex">
-                                                    <!-- Comment Author -->
-                                                    <div class="comment-author">
-                                                        <img src="/img/bg-img/31.jpg" alt="author">
+                                            <div class="media">
+                                                <!-- answer to the first comment -->
+                                                <div class="media-heading">
+                                                    <button class="btn btn-default btn-collapse btn-xs" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseExample">
+                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                                    </button>
+                                                    <span class="author-thumbnail">
+                                                        <img src="/img/bg-img/32.jpg" alt="" class="img-comment">
+                                                    </span> @item.UserFullName 12 sat once yazmis
+                                                </div>
+                                                <div class="panel-collapse collapse in" id="collapseTwo">
+                                                    <div class="media-left">
+                                                        <div class="vote-wrap">
+                                                            <div class="save-post">
+                                                                <a href="#"><span class="glyphicon glyphicon-star" aria-label="Save"></span></a>
+                                                            </div>
+                                                            <div class="vote up">
+                                                                <i class="glyphicon glyphicon-menu-up"></i>
+                                                            </div>
+                                                            <div class="vote inactive">
+                                                                <i class="glyphicon glyphicon-menu-down"></i>
+                                                            </div>
+                                                        </div>
+                                                        <!-- vote-wrap -->
                                                     </div>
-                                                    <!-- Comment Meta -->
-                                                    <div class="comment-meta">
-                                                        <a href="#" class="post-author">@item.UserFullName</a>
-                                                        <a href="#" class="post-date">@item.CreateOn</a>
+                                                    <!-- media-left -->
+                                                    <div class="media-body">
                                                         <p>@item.Remark</p>
+                                                        <!-- comment-meta -->
                                                     </div>
                                                 </div>
-                                            </li>
+                                                <!-- comments -->
+                                            </div>
                                         }
-                                    </ol>
-                                </li>
 
-                            }
-                        </ol>
+                                    </div>
+                                </div>
+                                <!-- comments -->
+
+                            </div>
+                        }
                     </div>
-
                     <div class="post-a-comment-area section-padding-80-0">
                         <h4>Để lại một bình luận cho bài viết này nhé</h4>
                         <!-- Reply Form -->
                         <div class="contact-form-area">
-                            <form action="#" method="post">
+                            <form action="/Ajax/Comment/CreateComment" method="post">
+                                <input type="hidden" name="newsId" value="@Model.NewsId" />
                                 <div class="row">
                                     <div class="col-12">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                        <textarea name="remark" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
                                     </div>
                                     <div class="col-12 text-center">
                                         <button class="btn newspaper-btn mt-30 w-100" type="submit">Submit Bình Luận</button>

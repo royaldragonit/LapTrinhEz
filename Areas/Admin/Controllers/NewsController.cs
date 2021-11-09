@@ -29,7 +29,7 @@ namespace LapTrinhEZ.Areas.Admin.Controllers
         }
 
         // GET: Admin/News/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,string slug)
         {
             if (id == null)
             {

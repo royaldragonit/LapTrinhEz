@@ -21,7 +21,6 @@
     <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/plugins/forms/form-quill-editor.css">
     <link rel="stylesheet" type="text/css" href="/admin/app-assets/css/pages/page-blog.css">
     <!-- END: Page CSS-->
-
 }
 @{
     ViewData["Title"] = "Index";
@@ -60,31 +59,31 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @item.Body.Substring(0, 50) ...
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FeatherImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.NewsId" class="btn btn-warning">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.NewsId" class="btn btn-info">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.NewsId" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td>
+                    @item.Body.Substring(0, 50) ...
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeatherImage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Views)
+                </td>
+                <td>
+                    <a href="@Url.Content("/Admin/News/Edit/"+item.NewsId+"/"+item.Slug)" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Content("/Admin/News/Details/"+item.NewsId+"/"+item.Slug)" class="btn btn-info">Details</a>
+                    <a href="@Url.Content("/Admin/News/Delete/"+item.NewsId+"/"+item.Slug)" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

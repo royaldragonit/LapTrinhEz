@@ -12,10 +12,9 @@ namespace LapTrinhEZ.Ajax
     [Route("ajax/[controller]/[action]")]
     public abstract class BaseAjaxController : Controller
     {
-        public INewsServices _newsServices;
-        public BaseAjaxController(INewsServices newsServices)
+        public int _userId = 1;
+        public BaseAjaxController()
         {
-            _newsServices = newsServices;
         }
     }
 }
